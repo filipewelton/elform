@@ -6,11 +6,12 @@ defmodule Elform.Utilities.PutErrorTest do
 
   describe "when all arguments is valid" do
     test "should return unknown error" do
-      %Schema{errors: errors} = Schema.cast(%{
-        label: "email",
-        validators: []
-      })
-      |> PutError.call(error: "unknown")
+      %Schema{errors: errors} =
+        Schema.cast(%{
+          label: "email",
+          validators: []
+        })
+        |> PutError.call(error: "unknown")
 
       expected_errors = [error: "unknown"]
 
