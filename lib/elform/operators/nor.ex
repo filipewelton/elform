@@ -11,9 +11,13 @@ defmodule Elform.Operators.Nor do
     results = Enum.map(validators, &Executor.execute_validator(&1, value))
 
     if :ok in results do
-      Enum.uniq(results)
-      |> List.delete(:ok)
-      |> List.flatten()
+      errors =
+        Enum.uniq(results)
+        |> List.delete(:ok)
+        |> List.flatten()
+        |> Keyword.values()
+
+        [nor: errors]
     else
       :ok
     end
