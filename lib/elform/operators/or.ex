@@ -10,6 +10,15 @@ defmodule Elform.Operators.Or do
     KeyList.check_keys!(validators)
     results = Enum.map(validators, &Executor.execute_validator(&1, value))
 
-    if :ok in results, do: :ok, else: List.flatten(results)
+    if :ok in results do
+      :ok
+    else
+      errors = Enum.uniq(results)
+      |> List.delete(:ok)
+      |> List.flatten()
+      |> Keyword.values()
+
+      [or: errors]
+    end
   end
 end
