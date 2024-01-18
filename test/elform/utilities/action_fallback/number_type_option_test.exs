@@ -1,11 +1,11 @@
-defmodule Elform.Utilities.ActionFallback.NumberTypeOptionTest do
+defmodule Elform.Utilities.ValidatorActionFallback.NumberTypeOptionTest do
   use ExUnit.Case
-  use Elform.Utilities.ActionFallback, name: :test, type: :number
+  use Elform.Utilities.ValidatorActionFallback, name: :test, type: :number
 
   describe "call/2" do
     test "when the value is not a number" do
       response = call(nil, :rand.uniform())
-      expected_response = [test: "the value must be a number"]
+      expected_response = [test: "the value should be a number"]
 
       assert response == expected_response
     end
@@ -20,7 +20,7 @@ defmodule Elform.Utilities.ActionFallback.NumberTypeOptionTest do
   describe "call/1" do
     test "when the value is not a number" do
       response = call(nil)
-      expected_response = [test: "the value must be a number"]
+      expected_response = [test: "the value should be a number"]
 
       assert response == expected_response
     end

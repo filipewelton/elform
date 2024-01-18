@@ -1,11 +1,11 @@
-defmodule Elform.Utilities.ActionFallback.StringTypeOptionTest do
+defmodule Elform.Utilities.ValidatorActionFallback.StringTypeOptionTest do
   use ExUnit.Case
-  use Elform.Utilities.ActionFallback, name: :test, type: :string
+  use Elform.Utilities.ValidatorActionFallback, name: :test, type: :string
 
   describe "call/2" do
     test "when the value is not a string" do
       response = call(nil, Faker.String.base64())
-      expected_response = [test: "the value must be a string"]
+      expected_response = [test: "the value should be a string"]
 
       assert response == expected_response
     end
