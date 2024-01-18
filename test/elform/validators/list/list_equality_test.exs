@@ -1,6 +1,5 @@
 defmodule Elform.Validators.List.ListEqualityTest do
   use ExUnit.Case
-  use Elform
 
   describe "call/2" do
     @list Faker.Lorem.words()
@@ -12,11 +11,11 @@ defmodule Elform.Validators.List.ListEqualityTest do
       }
 
       payload = %{"words" => Faker.Lorem.words()}
-      response = validate(schema, payload)
+      response = Elform.validate(schema, payload)
       list = Enum.sort(@list) |> Enum.join(",")
 
       expected_response =
-        %{"words" => [list_equality: "the list must be equal to [#{list}]"]}
+        %{"words" => [list_equality: "the list should be equal to [#{list}]"]}
 
       assert response == expected_response
     end
@@ -28,7 +27,7 @@ defmodule Elform.Validators.List.ListEqualityTest do
       }
 
       payload = %{"words" => @list}
-      response = validate(schema, payload)
+      response = Elform.validate(schema, payload)
       expected_response = %{"words" => :ok}
 
       assert response == expected_response

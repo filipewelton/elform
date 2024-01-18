@@ -1,31 +1,29 @@
-defmodule Validators.Elform.Number.LessThanTest do
+defmodule Elform.Validators.Number.OddNumberTest do
   use ExUnit.Case
 
-  @number :rand.uniform(99)
-
-  describe "when the value is greater than #{@number}" do
+  describe "when there is not an odd number" do
     test "should return a schema error" do
       schema = %{
         label: "age",
-        validators: [less_than: @number]
+        validators: [:odd_number]
       }
 
-      payload = %{"age" => @number + 1}
+      payload = %{"age" => 18}
       response = Elform.validate(schema, payload)
-      expected_response = %{"age" => [less_than: "the value should be less than #{@number}"]}
+      expected_response = %{"age" => [odd_number: "the value should be an odd number"]}
 
       assert response == expected_response
     end
   end
 
-  describe "when the value is less than #{@number}" do
+  describe "when there is an odd number" do
     test "should return ':ok'" do
       schema = %{
         label: "age",
-        validators: [less_than: @number]
+        validators: [:odd_number]
       }
 
-      payload = %{"age" => @number - 1}
+      payload = %{"age" => 17}
       response = Elform.validate(schema, payload)
       expected_response = %{"age" => :ok}
 
