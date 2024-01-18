@@ -1,0 +1,11 @@
+/_build/
+/cover/
+/deps/
+/doc/
+/.vscode/
+
+/.fetch
+erl_crash.dump
+*.ez
+elform-*.tar
+/tmp/
