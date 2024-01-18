@@ -1,4 +1,5 @@
 # Elform
+[![codecov](https://codecov.io/gh/filipewelton/elform/graph/badge.svg?token=8HSK2N9S8F)](https://codecov.io/gh/filipewelton/elform)
 
 ## Description
 Provide multiple functions for data validation and operators for most specific validation. The data types accepted are string, number, boolean, list, or map.
