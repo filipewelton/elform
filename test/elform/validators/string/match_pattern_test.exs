@@ -1,8 +1,6 @@
 defmodule Elform.Validators.String.MatchPatternTest do
   use ExUnit.Case
 
-  alias Elform.Schema
-
   describe "when passing a pattern as string" do
     test "should return a schema error" do
       email = Faker.Internet.email()
