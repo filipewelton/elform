@@ -1,38 +1,69 @@
 defmodule Elform.Operators.OrTest do
   use ExUnit.Case
 
-  alias Elform.Operators.Or
+  alias Faker.Address.{En, Es, PtBr}
 
   describe "when the value does not match any of the conditions" do
     test "should return multiple errors" do
-      expected_text = "text"
-      another_text = "another text"
+      addr1 = En.city()
+      addr2 = PtBr.city()
+      addr3 = Es.city()
 
-      response =
-        Or.call(another_text, length_greater_than: 20, text_equality: expected_text)
+      schema = %{
+        label: "address",
+        validators: [
+          or: [text_equality: addr1, text_equality: addr2]
+        ]
+      }
 
-      expected_response = [
-        length_greater_than: "the text length should be greater than 20",
-        text_equality: "text should be equal to '#{expected_text}'"
-      ]
+      payload = %{"address" => addr3}
+      response = Elform.validate(schema, payload)
+
+      expected_response = %{
+        "address" => [
+          or: [
+            "text should be equal to '#{addr1}'",
+            "text should be equal to '#{addr2}'"
+          ]
+        ]
+      }
 
       assert response == expected_response
     end
   end
 
-  describe "when the value doe match all conditions" do
-    test "when the value matches one of the conditions" do
-      text = Faker.String.base64()
-      response = Or.call(text, length_greater_than: 20, text_equality: text)
+  describe "when the value of match all conditions" do
+    test "should return ':ok'" do
+      addr1 = En.city()
+      addr2 = PtBr.city()
 
-      assert response == :ok
+      schema = %{
+        label: "address",
+        validators: [
+          or: [text_equality: addr1, text_equality: addr2]
+        ]
+      }
+
+      payload = %{"address" => addr2}
+      response = Elform.validate(schema, payload)
+      expected_response = %{"address" => :ok}
+
+      assert response == expected_response
     end
   end
 
-  describe "when the 'validators' argument is invalid" do
+  describe "when there is an invalid argument" do
     test "should throw argument error" do
-      text = Faker.String.base64()
-      assert_raise(ArgumentError, fn -> Or.call(text, %{}) end)
+      text = Faker.Lorem.word()
+
+      schema = %{
+        label: "text",
+        validators: [or: nil]
+      }
+
+      payload = %{"text" => text}
+
+      assert_raise(ArgumentError, fn -> Elform.validate(schema, payload) end)
     end
   end
 end
