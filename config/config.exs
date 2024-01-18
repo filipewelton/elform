@@ -16,6 +16,6 @@ config :elform,
     prime_number: Elform.Validators.Number.PrimeNumber,
     list_equality: Elform.Validators.List.ListEquality,
     map_equality: Elform.Validators.Map.MapEquality,
-    and: Elform.Operators.And,
-    or: Elform.Operators.Or
+    or: Elform.Operators.Or,
+    nor: Elform.Operators.Nor
   ]
