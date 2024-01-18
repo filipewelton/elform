@@ -1,6 +1,6 @@
 defmodule Elform.Operators.Or do
-  alias Elform.Utilities.KeyList
   alias Elform.Executor
+  alias Elform.Utilities.KeyList
 
   def call(_value, validators) when not is_list(validators) do
     raise ArgumentError, "The 'validators' argument should be a key list"
