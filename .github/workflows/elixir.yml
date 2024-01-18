@@ -33,6 +33,9 @@ jobs:
       - name: Check Formatting
         run: mix format --check-formatted
 
+      - name: Install dependencies
+        run: mix deps.get
+
       - name: Run credo
         run: mix credo --strict
 
@@ -45,9 +48,6 @@ jobs:
         uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: Install dependencies
-        run: mix deps.get
 
       - name: Run tests
         run: mix test
