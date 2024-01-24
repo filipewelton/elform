@@ -1,4 +1,4 @@
-defmodule Elform.Validations.Strings.EmailTest do
+defmodule Elform.Validations.Strings.Bra.CepTest do
   use ExUnit.Case
   use Elform
 
@@ -13,10 +13,10 @@ defmodule Elform.Validations.Strings.EmailTest do
       }
 
       response =
-        %{email: email(error)}
+        %{cep: bra_cep(error)}
         |> Elform.parse_errors()
 
-      expected_response = %{email: "unknown error"}
+      expected_response = %{cep: "unknown error"}
 
       assert response == expected_response
     end
@@ -25,38 +25,38 @@ defmodule Elform.Validations.Strings.EmailTest do
   describe "when the value is not a string" do
     test "then return an error message" do
       response =
-        %{email: email(nil)}
+        %{cep: bra_cep(nil)}
         |> Elform.parse_errors()
 
-      expected_response = %{email: "the value must be a string"}
+      expected_response = %{cep: "the value must be a string"}
 
       assert response == expected_response
     end
   end
 
-  describe "when the value does not matches with the pattern" do
+  describe "when the value is not a valid CEP" do
     test "then return an error message" do
       value = Faker.String.base64()
 
       response =
-        %{email: email(value)}
+        %{cep: bra_cep(value)}
         |> Elform.parse_errors()
 
-      expected_response = %{email: "the value is not a valid email"}
+      expected_response = %{cep: "the value is not a valid CEP"}
 
       assert response == expected_response
     end
   end
 
-  describe "when the value matches with the pattern" do
+  describe "when the value is a valid CEP" do
     test "then return ok" do
-      value = Faker.Internet.email()
+      value = "86810-160"
 
       response =
-        %{email: email(value)}
+        %{cep: bra_cep(value)}
         |> Elform.parse_errors()
 
-      expected_response = %{email: :ok}
+      expected_response = %{cep: :ok}
 
       assert response == expected_response
     end

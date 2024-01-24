@@ -5,7 +5,7 @@ defmodule Elform.Validations.Strings.MatchesTest do
   alias Elform.SchemaFieldError
 
   describe "when the first argument is a SchemaFieldError" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       error = %SchemaFieldError{
         arguments: [],
         reason: "unknown error",
@@ -23,7 +23,7 @@ defmodule Elform.Validations.Strings.MatchesTest do
   end
 
   describe "when the first argument is not a string" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       response =
         %{field: matches(nil, ~r//)}
         |> Elform.parse_errors()
@@ -35,7 +35,7 @@ defmodule Elform.Validations.Strings.MatchesTest do
   end
 
   describe "when the second argument is not a regex" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       value = Faker.String.base64()
 
       response =
@@ -49,7 +49,7 @@ defmodule Elform.Validations.Strings.MatchesTest do
   end
 
   describe "when the value does not match the pattern" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       value = Faker.Lorem.word()
       regex = ~r/^([0-9]+)$/
       source = Regex.source(regex)

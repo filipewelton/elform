@@ -1,4 +1,4 @@
-defmodule Elform.Validations.Strings.EmailTest do
+defmodule Elform.Validations.Strings.Bra.CnpjTest do
   use ExUnit.Case
   use Elform
 
@@ -13,10 +13,10 @@ defmodule Elform.Validations.Strings.EmailTest do
       }
 
       response =
-        %{email: email(error)}
+        %{cnpj: bra_cnpj(error)}
         |> Elform.parse_errors()
 
-      expected_response = %{email: "unknown error"}
+      expected_response = %{cnpj: "unknown error"}
 
       assert response == expected_response
     end
@@ -25,38 +25,38 @@ defmodule Elform.Validations.Strings.EmailTest do
   describe "when the value is not a string" do
     test "then return an error message" do
       response =
-        %{email: email(nil)}
+        %{cnpj: bra_cnpj(nil)}
         |> Elform.parse_errors()
 
-      expected_response = %{email: "the value must be a string"}
+      expected_response = %{cnpj: "the value must be a string"}
 
       assert response == expected_response
     end
   end
 
-  describe "when the value does not matches with the pattern" do
+  describe "when the value is not a valid CNPJ" do
     test "then return an error message" do
       value = Faker.String.base64()
 
       response =
-        %{email: email(value)}
+        %{cnpj: bra_cnpj(value)}
         |> Elform.parse_errors()
 
-      expected_response = %{email: "the value is not a valid email"}
+      expected_response = %{cnpj: "the value is not a valid CNPJ"}
 
       assert response == expected_response
     end
   end
 
-  describe "when the value matches with the pattern" do
+  describe "when the value is a valid CNPJ" do
     test "then return ok" do
-      value = Faker.Internet.email()
+      value = "66.494.705/0001-10"
 
       response =
-        %{email: email(value)}
+        %{cnpj: bra_cnpj(value)}
         |> Elform.parse_errors()
 
-      expected_response = %{email: :ok}
+      expected_response = %{cnpj: :ok}
 
       assert response == expected_response
     end

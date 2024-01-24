@@ -5,10 +5,10 @@ defmodule Elform.Validations.Strings.LengthTest do
   alias Elform.SchemaFieldError
 
   @min :rand.uniform(9)
-  @max @min + :rand.uniform(19)
+  @max @min + :rand.uniform(19) + 1
 
   describe "when the first argument is a SchemaFieldError" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       error = %SchemaFieldError{
         arguments: [],
         reason: "unknown error",
@@ -26,7 +26,7 @@ defmodule Elform.Validations.Strings.LengthTest do
   end
 
   describe "when the first argument is not a string" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       value = nil
 
       response =
@@ -40,7 +40,7 @@ defmodule Elform.Validations.Strings.LengthTest do
   end
 
   describe "when the second argument is not a number" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       value = Faker.String.base64(@min)
 
       response =
@@ -54,7 +54,7 @@ defmodule Elform.Validations.Strings.LengthTest do
   end
 
   describe "when the third argument is not a number" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       value = Faker.String.base64(@min)
 
       response =
@@ -68,7 +68,7 @@ defmodule Elform.Validations.Strings.LengthTest do
   end
 
   describe "when the text length is less than allowed" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       value = Faker.String.base64(@min - 1)
 
       response =
@@ -84,7 +84,7 @@ defmodule Elform.Validations.Strings.LengthTest do
   end
 
   describe "when the text length is greater than allowed" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       value = Faker.String.base64(@max + 1)
 
       response =

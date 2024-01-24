@@ -17,7 +17,7 @@ defmodule Elform.Validations.Generics.EqualTest do
   ]
 
   describe "when the first argument is a SchemaFieldError" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       error = %SchemaFieldError{
         arguments: [],
         reason: "unknown error",
@@ -35,7 +35,7 @@ defmodule Elform.Validations.Generics.EqualTest do
   end
 
   describe "when the value should be of type string" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       response =
         %{
           field: equal(1, Faker.Lorem.word())
@@ -49,7 +49,7 @@ defmodule Elform.Validations.Generics.EqualTest do
   end
 
   describe "when the value should be of type number" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       response =
         %{
           field: equal(Faker.Lorem.word(), :rand.uniform())
@@ -63,7 +63,7 @@ defmodule Elform.Validations.Generics.EqualTest do
   end
 
   describe "when the value should be of type list" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       response =
         %{
           field: equal(1, [])
@@ -77,7 +77,7 @@ defmodule Elform.Validations.Generics.EqualTest do
   end
 
   describe "when the value should be of type map" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       response =
         %{
           field: equal(1, %{})
@@ -91,7 +91,7 @@ defmodule Elform.Validations.Generics.EqualTest do
   end
 
   describe "when the argument type is not allowed" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       response =
         %{
           field: equal(1, true)
@@ -119,7 +119,7 @@ defmodule Elform.Validations.Generics.EqualTest do
   end
 
   describe "when the value is of type string and is different from expected" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       response =
         %{
           field: equal(Faker.Lorem.word(), @text)
@@ -145,7 +145,7 @@ defmodule Elform.Validations.Generics.EqualTest do
   end
 
   describe "when the value is of numeric type and is different from expected" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       response =
         %{field: equal(:rand.uniform(), @number)}
         |> Elform.parse_errors()
@@ -169,7 +169,7 @@ defmodule Elform.Validations.Generics.EqualTest do
   end
 
   describe "when the value of type map and is different from expected" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       response =
         %{field: equal(%{}, @map)}
         |> Elform.parse_errors()
@@ -193,7 +193,7 @@ defmodule Elform.Validations.Generics.EqualTest do
   end
 
   describe "when the value of type list and is different from expected" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       response =
         %{field: equal([], @list)}
         |> Elform.parse_errors()

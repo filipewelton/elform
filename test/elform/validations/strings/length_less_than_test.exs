@@ -7,7 +7,7 @@ defmodule Elform.Validations.Strings.LengthLessThanTest do
   @required_length :rand.uniform(9)
 
   describe "when the first argument is a SchemaFieldError struct" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       error = %SchemaFieldError{
         arguments: [],
         reason: "unknown error",
@@ -25,7 +25,7 @@ defmodule Elform.Validations.Strings.LengthLessThanTest do
   end
 
   describe "when the second argument is not a number" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       value = Faker.String.base64(@required_length)
 
       response =
@@ -39,7 +39,7 @@ defmodule Elform.Validations.Strings.LengthLessThanTest do
   end
 
   describe "when the first argument is not a string" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       value = nil
 
       response =
@@ -53,7 +53,7 @@ defmodule Elform.Validations.Strings.LengthLessThanTest do
   end
 
   describe "when the text length is greater than #{@required_length}" do
-    test "then return a SchemaFieldError" do
+    test "then return an error message" do
       value = Faker.String.base64(@required_length)
 
       response =
