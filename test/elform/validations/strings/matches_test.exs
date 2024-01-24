@@ -16,10 +16,10 @@ defmodule Elform.Validations.Strings.MatchesTest do
         %{field: matches(error, ~r//)}
         |> Elform.parse_errors()
 
-        expected_response = %{field: "unknown error"}
+      expected_response = %{field: "unknown error"}
 
-        assert response == expected_response
-      end
+      assert response == expected_response
+    end
   end
 
   describe "when the first argument is not a string" do
