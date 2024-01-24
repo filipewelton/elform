@@ -4,6 +4,10 @@ defmodule Elform do
   defmacro __using__(_opts) do
     quote do
       import Elform.Validations.Generics.Equal
+      import Elform.Validations.Strings.Bra.Cep
+      import Elform.Validations.Strings.Bra.Cnpj
+      import Elform.Validations.Strings.Bra.Cpf
+      import Elform.Validations.Strings.CreditCard
       import Elform.Validations.Strings.Email
       import Elform.Validations.Strings.Length
       import Elform.Validations.Strings.LengthGreaterThan
