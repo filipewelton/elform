@@ -19,10 +19,11 @@ Elform.parse_errors(schema)
 
 ### It's Extensible
 Just create and call custom functions since they follow the requirements.
-- The functions should be capable of dealing with the 'SchemaFieldError' struct.
-- The functions should be capable of dealing with the data type.
-- The function can or cannot receive parameters.
-- If the functions receive parameters, they should be able to treat them.
+- The function should be capable of dealing with the 'SchemaFieldError' struct;
+- The function should be capable of dealing with the data type;
+- The function can or cannot receive countless parameters;
+- If the function receive parameters, they must be treated;
+- If the value is invalid, it must be returned 'SchemaFieldError';
 
 ```elixir
 defmodule CustomValidation do
@@ -45,7 +46,9 @@ defmodule MyApp do
   use Elform # Use module
 
   def call(value, expected_value) do
-    %{field_name: length(value, 1, 255) |> equal(expected_value)}
+    %{
+      field_name: length(value, 1, 255) |> equal(expected_value)
+    }
     |> Elform.parse_errors()
   end
 end
