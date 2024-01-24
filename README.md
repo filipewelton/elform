@@ -2,24 +2,51 @@
 [![codecov](https://codecov.io/gh/filipewelton/elform/graph/badge.svg?token=8HSK2N9S8F)](https://codecov.io/gh/filipewelton/elform)
 
 ## Description
-Provide a schema and functions for data validation of the type: string, number, boolean, list, or map.
+A simple and extensible data validator with functions capable of dealing with data such as strings, numbers, maps, and lists.
 
-## Inspirations
-nimble_options - https://hex.pm/packages/nimble_options
+### It's Simple
+Just call the validation functions and catch errors with the function 'parse_errors';
 
-yup - https://github.com/jquense/yup
+```elixir
+# 1. Define the schema
+schema = %{
+  email: length_less_than("#{value}", 255) |> equal("#{expected}")
+}
 
-## Concepts
-There are two concepts: schemas, and validators.
+# 2. Parse errors
+Elform.parse_errors(schema)
+```
 
-### Schema
-The structure that determines the requirements of data must follow to be valid.
+### It's Extensible
+Just create and call custom functions since they follow the requirements.
+- The functions should be capable of dealing with the 'SchemaFieldError' struct.
+- The functions should be capable of dealing with the data type.
+- The function can or cannot receive parameters.
+- If the functions receive parameters, they should be able to treat them.
 
-- The 'label' property should be a string that labels the data.
+```elixir
+defmodule CustomValidation do
+  alias Elform.SchemaFieldError
 
-- The 'required' property should be a boolean, indicating whether the data is required.
+  def custom(%SchemaFieldError{} = error), do: error
 
-- The 'validators' property should be a list of keywords or atoms to determine the validations.
+  def custom(%SchemaFieldError{} = error, args), do: error
 
-### Validators
-These are modules that validate data.
+  def custom(value), do: # something
+
+  def custom(value, args), do: # something
+end
+```
+
+## How To Use
+
+```elixir
+defmodule MyApp do
+  use Elform # Use module
+
+  def call(value, expected_value) do
+    %{field_name: length(value, 1, 255) |> equal(expected_value)}
+    |> Elform.parse_errors()
+  end
+end
+```
